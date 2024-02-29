@@ -1,25 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "../src/style/translate-form.scss"; // Adjust the path based on your file structure
+import "../src/style/history.scss";
+
+import { TranslationProvider } from "./context/TranslationContext";
+import TranslateForm from "./pages/translation";
+import TranslationHistory from "./pages/history";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <TranslationProvider>
+      <div>
+        <h1>EchoTranslate</h1>
+        <TranslateForm />
+        <TranslationHistory />
+      </div>
+    </TranslationProvider>
   );
 }
 

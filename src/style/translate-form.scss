@@ -1,0 +1,48 @@
+.translate-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; // Space between form elements
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f4f4f4;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .translate-input,
+  .translate-button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+
+  .translate-input {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom: none;
+  }
+
+  .translate-button {
+    background-color: #007bff;
+    color: white;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: darken(#007bff, 10%);
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+    }
+  }
+
+  .translate-error {
+    color: #d9534f; // Bootstrap's `btn-danger` text color for consistency
+    margin-top: 10px;
+  }
+}
