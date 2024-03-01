@@ -1,48 +1,98 @@
 .translate-form {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px; // Space between form elements
+  justify-content: center;
+  column-gap: 30px;
   padding: 20px;
   border-radius: 8px;
-  background-color: #f4f4f4;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   .translate-input,
   .translate-button {
     width: 100%;
     padding: 10px;
-    border-radius: 4px;
+    border-radius: 8px;
     border: 1px solid #ccc;
     font-size: 16px;
+    color: #1e1e1e;
   }
 
   .translate-input {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-    border-bottom: none;
+    width: 420px;
+    height: 300px;
+    resize: none;
   }
 
   .translate-button {
-    background-color: #007bff;
+    background-color: #1e1e1e;
     color: white;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+    width: 100px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 
     &:hover {
-      background-color: darken(#007bff, 10%);
+      background-color: darken(#007bff, 60%);
     }
 
     &:focus {
       outline: none;
       box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
     }
+
+    &:disabled {
+      background-color: lighten(#1e1e1e, 60%);
+    }
   }
 
   .translate-error {
     color: #d9534f; // Bootstrap's `btn-danger` text color for consistency
     margin-top: 10px;
+  }
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.translate-text {
+  width: 420px;
+  height: 300px;
+  resize: none;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin-top: 42px;
+  color: #1e1e1e;
+}
+
+.microphone {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  color: #1e1e1e;
+}
+
+.microphone-button {
+  border: none;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.2s ease, border 0.2s ease;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    background-color: transparent;
+    border: 2px solid rgba(0, 0, 0, 0.2);
   }
 }

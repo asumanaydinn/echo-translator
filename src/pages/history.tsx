@@ -2,19 +2,21 @@ import React from "react";
 import { useTranslation } from "../context/TranslationContext";
 
 const TranslationHistory = () => {
-  const { translations } = useTranslation();
+  const { translations, setSelectedHistoryItem } = useTranslation();
 
   return (
     <div className="history">
-      <img src="../assets/logo.png" alt="logo" />
-      <ul>
+      <div className="history-list">
         {translations.map(({ id, englishText, turkishText }) => (
-          <li key={id}>
-            <strong>English:</strong> {englishText} | <strong>Turkish:</strong>{" "}
-            {turkishText}
-          </li>
+          <div
+            key={id}
+            className="history-list-item"
+            onClick={() => setSelectedHistoryItem(englishText)}
+          >
+            {englishText}
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

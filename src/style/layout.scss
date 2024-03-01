@@ -1,0 +1,14 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+}
+
+.body {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+}

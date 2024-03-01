@@ -15,12 +15,15 @@ interface Translation {
 interface TranslationContextType {
   translations: Translation[];
   addTranslation: (englishText: string, turkishText: string) => void;
+  setSelectedHistoryItem: React.Dispatch<React.SetStateAction<string>>;
+  selectedHistoryItem: string;
 }
 
-// Provide a default value matching the shape of TranslationContextType
 const defaultValue: TranslationContextType = {
   translations: [],
-  addTranslation: () => {}, // Provide a no-op function as a placeholder
+  addTranslation: () => {},
+  selectedHistoryItem: "",
+  setSelectedHistoryItem: () => {},
 };
 
 const TranslationContext = createContext<TranslationContextType>(defaultValue);
@@ -32,13 +35,13 @@ export function useTranslation() {
 export const TranslationProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  // Initialize translations state from localStorage if available
   const [translations, setTranslations] = useState<Translation[]>(() => {
     const savedTranslations = localStorage.getItem("translations");
     return savedTranslations ? JSON.parse(savedTranslations) : [];
   });
 
-  // Update localStorage whenever translations change
+  const [selectedHistoryItem, setSelectedHistoryItem] = useState("");
+
   useEffect(() => {
     localStorage.setItem("translations", JSON.stringify(translations));
   }, [translations]);
@@ -57,7 +60,14 @@ export const TranslationProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <TranslationContext.Provider value={{ translations, addTranslation }}>
+    <TranslationContext.Provider
+      value={{
+        translations,
+        addTranslation,
+        selectedHistoryItem,
+        setSelectedHistoryItem,
+      }}
+    >
       {children}
     </TranslationContext.Provider>
   );

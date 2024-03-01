@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "../context/TranslationContext";
+import { MicNoneRounded } from "@mui/icons-material";
 
 declare var SpeechRecognition: any;
 
@@ -28,9 +29,11 @@ const translateText = async (text: string): Promise<string> => {
 };
 
 const TranslateForm: React.FC = () => {
-  const { addTranslation } = useTranslation();
+  const { addTranslation, selectedHistoryItem, translations } =
+    useTranslation();
   const [inputText, setInputText] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
+
+  const [translatedText, setTranslatedText] = useState("");
 
   const [isListening, setIsListening] = useState(false);
 
@@ -60,34 +63,66 @@ const TranslateForm: React.FC = () => {
     recognition.start();
   };
 
+  useEffect(() => {
+    if (selectedHistoryItem !== "") {
+      setInputText(selectedHistoryItem);
+    }
+  }, [selectedHistoryItem]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const translatedText = await translateText(inputText);
-      addTranslation(inputText, translatedText);
-      setInputText(""); // Clear the input after successful submission
-      setError(null); // Reset error state if previous attempt had failed
+      if (!translations.find((b) => b.englishText === inputText)) {
+        addTranslation(inputText, translatedText);
+      }
+      setTranslatedText(translatedText);
     } catch (error) {
-      setError("Failed to translate. Please try again."); // Set error message for the user
+      console.log("Failed to translate. Please try again."); // Set error message for the user
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="translate-form">
-      <input
-        type="text"
-        value={inputText}
-        onChange={(e) => setInputText(e.target.value)}
-        placeholder="Enter text in English"
-        className="translate-input"
-      />
-      <button type="button" onClick={startListening} disabled={isListening}>
-        {isListening ? "Listening..." : "Speak"}
-      </button>
-      <button type="submit" className="translate-button">
-        Translate
-      </button>
-      {error && <p className="translate-error">{error}</p>}
+      <div className="input-container">
+        <div className="microphone">
+          {isListening && "Listening..."}
+
+          <button
+            type="button"
+            className="microphone-button"
+            onClick={startListening}
+            disabled={isListening}
+          >
+            <MicNoneRounded />
+          </button>
+        </div>
+
+        <textarea
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
+          placeholder="Enter text in English"
+          className="translate-input"
+        />
+
+        <button
+          type="submit"
+          className="translate-button"
+          disabled={inputText === ""}
+        >
+          Translate
+        </button>
+      </div>
+
+      <div className="translate-text">
+        {translatedText === "" ? (
+          <div style={{ color: "#B5B6B7" }}>
+            Translated text will be appear here
+          </div>
+        ) : (
+          translatedText
+        )}
+      </div>
     </form>
   );
 };
